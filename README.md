@@ -1,4 +1,4 @@
-# http_status_codes
+# https_status_codes
 
 Constants enumerating the HTTP status codes. Based on the [Java Apache HttpStatus API](http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html).
 
@@ -14,7 +14,7 @@ import {
   ReasonPhrases,
   getStatusCodes,
   getReasonPhrases
-} from "https://deno.land/x/http_status_codes/mod.ts"
+} from "https://deno.land/x/https_status_codes/mod.ts"
 
 response
 	.status(StatusCodes.OK)
