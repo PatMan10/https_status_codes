@@ -1,6 +1,6 @@
 import { path, Rhum } from "../../deps/dev.ts";
 //---------------------------------------------------
-import { JsonCode } from "../../app/main/typescript/models/json-code.ts";
+import { IJsonCode } from "../../app/main/typescript/models/json-code.ts";
 import { StatusCodes } from "../main/status-codes.ts";
 import { ReasonPhrases } from "../main/reason-phrases.ts";
 import { getReasonPhrase, getStatusCode } from "../main/utils/functions.ts";
@@ -11,13 +11,14 @@ Deno.chdir(testModuleDir);
 const { assertEquals, assertThrows } = Rhum.asserts;
 
 Rhum.testPlan("lib.test.ts", () => {
-  let codes: JsonCode[];
+  let codes: IJsonCode[];
 
   Rhum.beforeAll(async () => {
-    const json = await Deno.readTextFile(
-      "../../app/main/resources/codes.json",
+    codes = JSON.parse(
+      await Deno.readTextFile(
+        "../../app/main/resources/codes.json",
+      ),
     );
-    codes = JSON.parse(json);
   });
 
   Rhum.testSuite("Status Codes", () => {

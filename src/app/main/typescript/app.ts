@@ -16,12 +16,12 @@ import {
 } from "../../../deps/dev.ts";
 import { markdownTable } from "../../../deps/dev.ts";
 //---------------------------------------------
-import { JsonCode } from "./models/json-code.ts";
+import { IJsonCode } from "./models/json-code.ts";
 
 const appModuleDir = path.dirname(import.meta.url.substring(7));
 Deno.chdir(appModuleDir);
 
-const codes: JsonCode[] = JSON.parse(
+const codes: IJsonCode[] = JSON.parse(
   await Deno.readTextFile("../resources/codes.json"),
 );
 
@@ -35,7 +35,7 @@ const reasonPhraseMembers: OptionalKind<EnumMemberStructure>[] = codes
     constant,
     comment,
     isDeprecated,
-  }: JsonCode) => {
+  }: IJsonCode) => {
     const { doc, description } = comment;
     const deprecatedString = isDeprecated ? "@deprecated\n" : "";
     return {
@@ -51,7 +51,7 @@ const statusCodeMembers: OptionalKind<EnumMemberStructure>[] = codes
     constant,
     comment,
     isDeprecated,
-  }: JsonCode) => {
+  }: IJsonCode) => {
     const { doc, description } = comment;
     const deprecatedString = isDeprecated ? "@deprecated\n" : "";
     return {
@@ -145,12 +145,15 @@ console.log("Successfully updated library.");
 console.log("Updating README.md table");
 const readmeUri = "../../../../README.md";
 let readmeFile = await Deno.readTextFile(readmeUri);
-const sortedCodes = codes.sort((a: JsonCode, b: JsonCode) => (a.code - b.code));
+const sortedCodes = codes.sort((
+  a: IJsonCode,
+  b: IJsonCode,
+) => (a.code - b.code));
 
 const table = markdownTable([
   ["Code", "Constant", "Reason Phrase"],
   ...sortedCodes.map((
-    code: JsonCode,
+    code: IJsonCode,
   ) => [code.code.toString(), code.constant, code.phrase]),
 ]);
 
