@@ -5,7 +5,6 @@
  * It regenerates the library, and updates the table in README.md
  * */
 
-import { path } from "../../../deps/dev.ts";
 import {
   EnumMemberStructure,
   OptionalKind,
@@ -17,9 +16,9 @@ import {
 import { markdownTable } from "../../../deps/dev.ts";
 //---------------------------------------------
 import { IJsonCode } from "./models/json-code.ts";
+import { currentModuleDir } from "./utils/functions/current-module-dir.ts";
 
-const appModuleDir = path.dirname(import.meta.url.substring(7));
-Deno.chdir(appModuleDir);
+Deno.chdir(currentModuleDir(import.meta.url));
 
 const codes: IJsonCode[] = JSON.parse(
   await Deno.readTextFile("../resources/codes.json"),

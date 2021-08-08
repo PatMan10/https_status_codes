@@ -1,12 +1,12 @@
-import { path, Rhum } from "../../deps/dev.ts";
+import { Rhum } from "../../deps/dev.ts";
 //---------------------------------------------------
 import { IJsonCode } from "../../app/main/typescript/models/json-code.ts";
 import { StatusCodes } from "../main/status-codes.ts";
 import { ReasonPhrases } from "../main/reason-phrases.ts";
 import { getReasonPhrase, getStatusCode } from "../main/utils/functions.ts";
+import { currentModuleDir } from "../../app/main/typescript/utils/functions/current-module-dir.ts";
 
-const testModuleDir = path.dirname(import.meta.url.substring(7));
-Deno.chdir(testModuleDir);
+Deno.chdir(currentModuleDir(import.meta.url));
 
 const { assertEquals, assertThrows } = Rhum.asserts;
 
