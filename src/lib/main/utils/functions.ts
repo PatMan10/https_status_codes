@@ -2,6 +2,7 @@ import {
   reasonPhraseToStatusCode,
   statusCodeToReasonPhrase,
 } from "./records.ts";
+import { GenericErrMessages } from "./constants.ts";
 
 /**
  * Returns the reason phrase for the given status code.
@@ -10,10 +11,10 @@ import {
  * @param {number|string} statusCode The HTTP status code
  * @returns {string} The associated reason phrase (e.g. "Bad Request", "OK")
  * */
-export function getReasonPhrase(statusCode: (number | string)): (string) {
+export function getReasonPhrase(statusCode: (number | string)): string {
   const result = statusCodeToReasonPhrase[statusCode.toString()];
   if (!result) {
-    throw new Error(`Status code does not exist: ${statusCode}`);
+    throw new Error(GenericErrMessages.STATUS_CODE_DOES_NOT_EXIST(statusCode));
   }
   return result;
 }
@@ -25,10 +26,12 @@ export function getReasonPhrase(statusCode: (number | string)): (string) {
  * @param {string} reasonPhrase The HTTP reason phrase (e.g. "Bad Request", "OK")
  * @returns {string} The associated status code
  * */
-export function getStatusCode(reasonPhrase: string): (number) {
+export function getStatusCode(reasonPhrase: string): number {
   const result = reasonPhraseToStatusCode[reasonPhrase];
   if (!result) {
-    throw new Error(`Reason phrase does not exist: ${reasonPhrase}`);
+    throw new Error(
+      GenericErrMessages.REASON_PHRASE_DOES_NOT_EXIST(reasonPhrase),
+    );
   }
   return result;
 }

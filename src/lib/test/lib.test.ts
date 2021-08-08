@@ -5,12 +5,13 @@ import { StatusCodes } from "../main/status-codes.ts";
 import { ReasonPhrases } from "../main/reason-phrases.ts";
 import { getReasonPhrase, getStatusCode } from "../main/utils/functions.ts";
 import { currentModuleDir } from "../../app/main/typescript/utils/functions/current-module-dir.ts";
+import { GenericErrMessages } from "../main/utils/constants.ts";
 
 Deno.chdir(currentModuleDir(import.meta.url));
 
 const { assertEquals, assertThrows } = Rhum.asserts;
 
-Rhum.testPlan("lib.test.ts", () => {
+Rhum.testPlan("lib tests", () => {
   let codes: IJsonCode[];
 
   Rhum.beforeAll(async () => {
@@ -21,8 +22,8 @@ Rhum.testPlan("lib.test.ts", () => {
     );
   });
 
-  Rhum.testSuite("Status Codes", () => {
-    Rhum.testCase("StatusCodes", () => {
+  Rhum.testSuite("StatusCodes", () => {
+    Rhum.testCase("all there", () => {
       // Divide by two because TypeScript enums contain both key and value
       // when values are Number types
       assertEquals(Object.keys(StatusCodes).length / 2, codes.length);
@@ -30,48 +31,53 @@ Rhum.testPlan("lib.test.ts", () => {
         assertEquals((<any> StatusCodes)[o.constant], o.code as number);
       });
     });
+  });
 
-    Rhum.testCase("getStatusCode", () => {
+  Rhum.testSuite("getStatusCode(reasonPhrase: string): number", () => {
+    Rhum.testCase("throw err for nonexistent reason phrase", () => {
+      const reasonPhrase = "blah blah";
+      assertThrows(
+        () => getStatusCode(reasonPhrase),
+        Error,
+        GenericErrMessages.REASON_PHRASE_DOES_NOT_EXIST(reasonPhrase),
+      );
+    });
+
+    Rhum.testCase("happy path", () => {
       codes.forEach((o) => {
         assertEquals(getStatusCode(o.phrase), o.code);
       });
     });
-
-    Rhum.testCase("getStatusCode nonexistent code", () => {
-      assertThrows(
-        () => {
-          getStatusCode("blah blah");
-        },
-        Error,
-        "Reason phrase does not exist: blah blah",
-      );
-    });
   });
 
-  Rhum.testSuite("Reason Phrases", () => {
-    Rhum.testCase("ReasonPhrases", () => {
+  Rhum.testSuite("ReasonPhrases", () => {
+    Rhum.testCase("all there", () => {
       assertEquals(Object.keys(ReasonPhrases).length, codes.length);
       codes.forEach((o) => {
         assertEquals((<any> ReasonPhrases)[o.constant], o.phrase);
       });
     });
-
-    Rhum.testCase("getReasonPhrase", () => {
-      codes.forEach((o) => {
-        assertEquals(getReasonPhrase(o.code), o.phrase);
-      });
-    });
-
-    Rhum.testCase("getReasonPhrase nonexistent phrase", () => {
-      assertThrows(
-        () => {
-          getReasonPhrase(9999999);
-        },
-        Error,
-        "Status code does not exist: 9999999",
-      );
-    });
   });
+
+  Rhum.testSuite(
+    "getReasonPhrase(statusCode: (string | number)): string",
+    () => {
+      Rhum.testCase("throw err for nonexistent status code", () => {
+        const statusCode = 9999999;
+        assertThrows(
+          () => getReasonPhrase(statusCode),
+          Error,
+          GenericErrMessages.STATUS_CODE_DOES_NOT_EXIST(statusCode),
+        );
+      });
+
+      Rhum.testCase("happy path", () => {
+        codes.forEach((o) => {
+          assertEquals(getReasonPhrase(o.code), o.phrase);
+        });
+      });
+    },
+  );
 });
 
 Rhum.run();

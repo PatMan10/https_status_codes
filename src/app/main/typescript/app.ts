@@ -27,7 +27,7 @@ const codes: IJsonCode[] = JSON.parse(
 console.log("Updating library.");
 const project = new Project();
 
-console.log("Creating code members.");
+console.log("\t=> Creating code members.");
 const reasonPhraseMembers: OptionalKind<EnumMemberStructure>[] = codes
   .map(({
     phrase,
@@ -72,7 +72,7 @@ const reasonPhraseToStatusCode = codes
     return acc;
   }, {});
 
-console.log("Creating source file objects.");
+console.log("\t=> Creating source file objects.");
 const statusCodeFile = project.createSourceFile(
   "../../../lib/main/status-codes.ts",
   {
@@ -137,7 +137,7 @@ const recordsFile = project.createSourceFile(
   sf.insertStatements(0, "// Generated file. Do not edit\n");
 });
 
-console.log("Writing source files.");
+console.log("\t=> Writing source files.");
 await project.save();
 console.log("Successfully updated library.");
 
@@ -149,6 +149,7 @@ const sortedCodes = codes.sort((
   b: IJsonCode,
 ) => (a.code - b.code));
 
+console.log("\t=> Creating new table.");
 const table = markdownTable([
   ["Code", "Constant", "Reason Phrase"],
   ...sortedCodes.map((
@@ -156,6 +157,7 @@ const table = markdownTable([
   ) => [code.code.toString(), code.constant, code.phrase]),
 ]);
 
+console.log("\t=> Replacing old table.");
 const readmeRegex = /## Codes\n\n([^#]*)##/g;
 readmeFile = readmeFile.replace(readmeRegex, `## Codes\n\n${table}\n\n##`);
 
