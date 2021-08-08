@@ -1,4 +1,4 @@
-# http-status-codes
+# http_status_codes
 
 Constants enumerating the HTTP status codes. Based on the [Java Apache HttpStatus API](http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/HttpStatus.html).
 
