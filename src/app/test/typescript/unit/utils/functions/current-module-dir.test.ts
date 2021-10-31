@@ -1,7 +1,7 @@
 import { path, Rhum } from "../../../../../../deps/dev.ts";
 //---------------------------------------------------
-import { currentModuleDir } from "../../../../../../app/main/typescript/utils/functions/current-module-dir.ts";
-import { GenericErrMessages } from "../../../../../main/typescript/utils/classes/constants/error-messages.ts";
+import { currentModuleDir } from "../../../../../main/utils/functions/current-module-dir.ts";
+import { GenericErrMessages } from "../../../../../main/utils/classes/constants/error-messages.ts";
 
 const { assertEquals, assertThrows } = Rhum.asserts;
 

@@ -12,8 +12,8 @@ import {
   StructureKind,
   VariableDeclarationKind,
   Writers,
-} from "../../../deps/dev.ts";
-import { markdownTable } from "../../../deps/dev.ts";
+} from "../../deps/dev.ts";
+import { markdownTable } from "../../deps/dev.ts";
 //---------------------------------------------
 import { IJsonCode } from "./models/json-code.ts";
 import { currentModuleDir } from "./utils/functions/current-module-dir.ts";
@@ -142,7 +142,7 @@ await project.save();
 console.log("Successfully updated library.");
 
 console.log("Updating README.md table");
-const readmeUri = "../../../../README.md";
+const readmeUri = "../../../README.md";
 let readmeFile = await Deno.readTextFile(readmeUri);
 const sortedCodes = codes.sort((
   a: IJsonCode,

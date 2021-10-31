@@ -1,10 +1,10 @@
 import { Rhum } from "../../deps/dev.ts";
 //---------------------------------------------------
-import { IJsonCode } from "../../app/main/typescript/models/json-code.ts";
+import { IJsonCode } from "../../app/main/models/json-code.ts";
 import { StatusCodes } from "../main/status-codes.ts";
 import { ReasonPhrases } from "../main/reason-phrases.ts";
 import { getReasonPhrase, getStatusCode } from "../main/utils/functions.ts";
-import { currentModuleDir } from "../../app/main/typescript/utils/functions/current-module-dir.ts";
+import { currentModuleDir } from "../../app/main/utils/functions/current-module-dir.ts";
 import { GenericErrMessages } from "../main/utils/constants.ts";
 
 Deno.chdir(currentModuleDir(import.meta.url));
