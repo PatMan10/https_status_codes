@@ -1,12 +1,8 @@
 import { Rhum } from "../../../deps/dev.ts";
-//---------------------------------------------------
 import { StatusCodes } from "../../main/code/status-codes.ts";
 import { ReasonPhrases } from "../../main/code/reason-phrases.ts";
-import {
-  getReasonPhrase,
-  getStatusCode,
-} from "../../main/code/utils/functions.ts";
-import { GenericErrMessages } from "../../main/code/utils/constants.ts";
+import { getReasonPhrase, getStatusCode } from "../../main/code/utils.ts";
+import { ErrorMessages } from "../../main/code/utils.ts";
 import { JsonCode } from "../../../app/main/code/models.ts";
 import { currentModuleDir } from "../../../app/main/code/utils.ts";
 
@@ -42,7 +38,7 @@ Rhum.testPlan("lib tests", () => {
       assertThrows(
         () => getStatusCode(reasonPhrase),
         Error,
-        GenericErrMessages.REASON_PHRASE_DOES_NOT_EXIST(reasonPhrase),
+        ErrorMessages.REASON_PHRASE_DOES_NOT_EXIST(reasonPhrase),
       );
     });
 
@@ -70,7 +66,7 @@ Rhum.testPlan("lib tests", () => {
         assertThrows(
           () => getReasonPhrase(statusCode),
           Error,
-          GenericErrMessages.STATUS_CODE_DOES_NOT_EXIST(statusCode),
+          ErrorMessages.STATUS_CODE_DOES_NOT_EXIST(statusCode),
         );
       });
 

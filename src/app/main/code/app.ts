@@ -15,7 +15,7 @@ import {
 } from "../../../deps/dev.ts";
 import { markdownTable } from "../../../deps/dev.ts";
 import { JsonCode } from "./models.ts";
-import { currentModuleDir } from "./utils.ts";
+import { currentModuleDir, logger } from "./utils.ts";
 
 Deno.chdir(currentModuleDir(import.meta.url));
 
@@ -23,10 +23,10 @@ const codes: JsonCode[] = JSON.parse(
   await Deno.readTextFile("../assets/codes.json"),
 );
 
-console.log("Updating library.");
+logger.info("Updating library.");
 const project = new Project();
 
-console.log("\t=> Creating code members.");
+logger.info("\t=> Creating code members.");
 const reasonPhraseMembers: OptionalKind<EnumMemberStructure>[] = codes
   .map(({
     phrase,
@@ -71,9 +71,10 @@ const reasonPhraseToStatusCode = codes
     return acc;
   }, {});
 
-console.log("\t=> Creating source file objects.");
+logger.info("\t=> Creating source file objects.");
+const libDir = "../../../lib/main/code/";
 const statusCodeFile = project.createSourceFile(
-  "../../../lib/main/status-codes.ts",
+  libDir.concat("status-codes.ts"),
   {
     statements: [{
       kind: StructureKind.Enum,
@@ -88,7 +89,7 @@ const statusCodeFile = project.createSourceFile(
 );
 
 const reasonPhraseFile = project.createSourceFile(
-  "../../../lib/main/reason-phrases.ts",
+  libDir.concat("reason-phrases.ts"),
   {
     statements: [
       {
@@ -105,7 +106,7 @@ const reasonPhraseFile = project.createSourceFile(
 );
 
 const recordsFile = project.createSourceFile(
-  "../../../lib/main/utils/records.ts",
+  libDir.concat("records.ts"),
   {
     statements: [{
       kind: StructureKind.VariableStatement,
@@ -136,11 +137,11 @@ const recordsFile = project.createSourceFile(
   sf.insertStatements(0, "// Generated file. Do not edit\n");
 });
 
-console.log("\t=> Writing source files.");
+logger.info("\t=> Writing source files.");
 await project.save();
-console.log("Successfully updated library.");
+logger.info("Successfully updated library.");
 
-console.log("Updating README.md table");
+logger.info("Updating README.md table");
 const readmeUri = "../../../../README.md";
 let readmeFile = await Deno.readTextFile(readmeUri);
 const sortedCodes = codes.sort((
@@ -148,7 +149,7 @@ const sortedCodes = codes.sort((
   b: JsonCode,
 ) => (a.code - b.code));
 
-console.log("\t=> Creating new table.");
+logger.info("\t=> Creating new table.");
 const table = markdownTable([
   ["Code", "Constant", "Reason Phrase"],
   ...sortedCodes.map((
@@ -156,9 +157,9 @@ const table = markdownTable([
   ) => [code.code.toString(), code.constant, code.phrase]),
 ]);
 
-console.log("\t=> Replacing old table.");
+logger.info("\t=> Replacing old table.");
 const readmeRegex = /## Codes\n\n([^#]*)##/g;
 readmeFile = readmeFile.replace(readmeRegex, `## Codes\n\n${table}\n\n##`);
 
 Deno.writeTextFile(readmeUri, readmeFile);
-console.log("Successfully updated README.md table");
+logger.info("Successfully updated README.md table");

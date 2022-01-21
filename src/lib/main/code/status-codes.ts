@@ -67,7 +67,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc2518#section-10.2
      *
-     * A Multi-Status response conveys information about multiple assets in situations where multiple status codes might be appropriate.
+     * A Multi-Status response conveys information about multiple resources in situations where multiple status codes might be appropriate.
      */
     MULTI_STATUS = 207,
     /**
@@ -182,7 +182,7 @@ export enum StatusCodes {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.9
      *
-     * This response would be sent when the requested content has been permenantly deleted from server, with no forwarding address. Clients are expected to remove their caches and links to the resource. The HTTP specification intends this status code to be used for "limited-time, promoional services". APIs should not feel compelled to indicate assets that have been deleted with this status code.
+     * This response would be sent when the requested content has been permenantly deleted from server, with no forwarding address. Clients are expected to remove their caches and links to the resource. The HTTP specification intends this status code to be used for "limited-time, promoional services". APIs should not feel compelled to indicate resources that have been deleted with this status code.
      */
     GONE = 410,
     /**
