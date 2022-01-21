@@ -1,21 +1,21 @@
 import { Rhum } from "../../../deps/dev.ts";
 //---------------------------------------------------
-import { IJsonCode } from "../../../app/main/code/models/json-code.ts";
 import { StatusCodes } from "../../main/code/status-codes.ts";
 import { ReasonPhrases } from "../../main/code/reason-phrases.ts";
 import {
   getReasonPhrase,
   getStatusCode,
 } from "../../main/code/utils/functions.ts";
-import { currentModuleDir } from "../../../app/main/code/utils/functions/current-module-dir.ts";
 import { GenericErrMessages } from "../../main/code/utils/constants.ts";
+import { JsonCode } from "../../../app/main/code/models.ts";
+import { currentModuleDir } from "../../../app/main/code/utils.ts";
 
 Deno.chdir(currentModuleDir(import.meta.url));
 
 const { assertEquals, assertThrows } = Rhum.asserts;
 
 Rhum.testPlan("lib tests", () => {
-  let codes: IJsonCode[];
+  let codes: JsonCode[];
 
   Rhum.beforeAll(async () => {
     codes = JSON.parse(

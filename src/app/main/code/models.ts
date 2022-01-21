@@ -1,12 +1,13 @@
-export interface IJsonCodeComment {
+export interface JsonCodeComment {
   doc: string;
   description: string;
 }
 
-export interface IJsonCode {
+export interface JsonCode {
   code: number;
   phrase: string;
   constant: string;
-  comment: IJsonCodeComment;
+  comment: JsonCodeComment;
   isDeprecated?: boolean;
 }
+

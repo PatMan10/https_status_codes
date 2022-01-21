@@ -1,6 +1,5 @@
-import { path, Rhum } from "../../../../../../deps/dev.ts";
-import { currentModuleDir } from "../../../../../main/code/utils/functions/current-module-dir.ts";
-import { GenericErrMessages } from "../../../../../main/code/utils/classes/constants/error-messages.ts";
+import { path, Rhum } from "../../../deps/dev.ts";
+import { currentModuleDir, ErrorMessages } from "../../main/code/utils.ts";
 
 const { assertEquals, assertThrows } = Rhum.asserts;
 
@@ -12,7 +11,7 @@ Rhum.testPlan("current-module-dir.ts", () => {
           currentModuleDir("URL");
         },
         Error,
-        GenericErrMessages.URL_TOO_SHORT,
+        ErrorMessages.URL_TOO_SHORT,
       );
     });
 
