@@ -1,6 +1,6 @@
 {
   "name": "https_status_codes",
-  "version": "2.0.0",
+  "version": "1.2.0",
   "description": "Constants enumerating the HTTP status codes. Based on the Java Apache HttpStatus API.",
   "main": "src/app/main/code/app.ts",
   "repository": "https://github.com/PatMan10/https_status_codes.git",
