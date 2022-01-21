@@ -1,8 +1,8 @@
-export { StatusCodes } from "./src/lib/main/status-codes.ts";
+export { StatusCodes } from "./src/lib/main/code/status-codes.ts";
 
-export { ReasonPhrases } from "./src/lib/main/reason-phrases.ts";
+export { ReasonPhrases } from "./src/lib/main/code/reason-phrases.ts";
 
 export {
   getReasonPhrase,
   getStatusCode,
-} from "./src/lib/main/utils/functions.ts";
+} from "./src/lib/main/code/utils/functions.ts";

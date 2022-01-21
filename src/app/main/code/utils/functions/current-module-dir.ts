@@ -1,4 +1,4 @@
-import { path } from "../../../../deps/dev.ts";
+import { path } from "../../../../../deps/dev.ts";
 //--------------------------------------------------
 import { GenericErrMessages } from "../classes/constants/error-messages.ts";
 

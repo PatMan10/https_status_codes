@@ -1,0 +1,14 @@
+{
+  "name": "https_status_codes",
+  "version": "2.0.0",
+  "description": "Constants enumerating the HTTP status codes. Based on the Java Apache HttpStatus API.",
+  "main": "src/app/main/code/app.ts",
+  "repository": "https://github.com/PatMan10/https_status_codes.git",
+  "author": "PatMan10 <PatMan10@protonmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "deno run --allow-read --allow-write --unstable ./src/app/main/code/app.ts",
+    "test": "deno test --allow-env --allow-read --unstable"
+  }
+}
